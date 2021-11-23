@@ -1,13 +1,13 @@
 { *********************************************************************** }
 {                                                                         }
-{   Total Commander content plugins (version 2.10 SE) header file         }
+{   Total Commander content plugins (version 2.12) header file            }
 {                                                                         }
 {   Éè¼Æ£ºLsuper 2015.02.14                                               }
 {   ±¸×¢£º                                                                }
 {   ÉóºË£º                                                                }
-{         Contents of file contplug.h version 2.10                        }
+{         Contents of file contplug.h version 2.12                        }
 {                                                                         }
-{   Copyright (c) 1998-2015 Super Studio                                  }
+{   Copyright (c) 1998-2021 Super Studio                                  }
 {                                                                         }
 { *********************************************************************** }
 
@@ -26,6 +26,7 @@ const
   ftNumeric64           = 2;
   ftNumericFloating     = 3;
   ftDate                = 4;
+
   ft_Time               = 5;
   ft_Boolean            = 6;
   ft_MultipleChoice     = 7;
@@ -33,7 +34,8 @@ const
   ft_Fulltext           = 9;
   ft_DateTime           = 10;
   ft_StringW            = 11;
-  ft_comparecontent     = 100;
+  ft_FullTextW          = 12;
+  ft_CompareContent     = 100;
 
   // for ContentGetValue
 
@@ -44,6 +46,8 @@ const
   ft_NotSupported       = -5;
   ft_SetCancel          = -6;
   ft_Delayed            = 0;
+  ft_Found              = 1;
+  ft_NotFound           = -8;
 
   // for ContentSetValue
 
@@ -61,6 +65,8 @@ const
   contFlags_PassThrough_Size_Float = 14;
   contFlags_SubstMask   = 14;
   contFlags_FieldEdit   = 16;
+  contFlags_FieldSearch = 32;
+  contFlags_SearchPageOnly = 64;
 
   // for ContentSendStateInformation
 
@@ -147,6 +153,10 @@ type
     FileName1, FileName2: PAnsiChar; FileDetails: PFileDetailsStruct): Integer; stdcall;
   function ContentCompareFilesW(ProgressCallback: TProgressCallbackProc; CompareIndex: Integer;
     FileName1, FileName2: PWideChar; FileDetails: PFileDetailsStruct): Integer; stdcall;
+
+  function ContentFindValue(FileName: PAnsiChar; FieldIndex, UnitIndex, OperationIndex, FieldType, flags: Integer; FieldValue: PByte): Integer; stdcall;
+  function ContentFindValueW(FileName: PWideChar; FieldIndex, UnitIndex, OperationIndex, FieldType, flags: Integer; FieldValue: PByte): Integer; stdcall;
+  function ContentGetSupportedOperators(FieldIndex: Integer; FieldOperators: PChar; maxlen: Integer): Integer; stdcall;
 }
 
 implementation
